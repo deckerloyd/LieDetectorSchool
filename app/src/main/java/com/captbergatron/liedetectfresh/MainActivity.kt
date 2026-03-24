@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+//Today's date is 24 March
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
