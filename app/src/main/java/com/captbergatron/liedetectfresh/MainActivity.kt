@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.captbergatron.liedetectfresh.ui.theme.LieDetectFreshTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +55,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun LieDetectorApp(){
     //1. State Declaration (the brain)
     val isLieTarget = remember { mutableStateOf(false) }
+    val isScanning = remember {mutableStateOf(false )}
 
     //2. Layout (the body)
     Column(
@@ -60,22 +63,33 @@ fun LieDetectorApp(){
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        //UI Components will go here!!
+        //Admin Row (secret buttons)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
-            Button(onClick = {isLieTarget.value = false}){
+        ) {
+            Button(onClick = { isLieTarget.value = false }) {
                 Text("Truth Button")
-        }
-            Button(onClick = {isLieTarget.value = true}){
+            }
+            Button(onClick = { isLieTarget.value = true }) {
                 Text("Lie Button")
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
-
-    }
+        Button(onClick = { isScanning.value = true //Start the fake sci-fi stuff
+        }) {
+            Text("Scan Fingerprint")
+        }
+        LaunchedEffect(isScanning.value) {
+            if (isScanning.value) {
+                delay(3000)
+                isScanning.value = false
+            }
+        }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
