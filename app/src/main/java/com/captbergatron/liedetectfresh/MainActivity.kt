@@ -102,7 +102,7 @@ fun LieDetectorApp() {
                    }) {
                     Text("Reset")
                 }
-                // This is where the prank's "Reveal" happens
+                // This is where the prank's Reveal happens
                 if (isLieTarget.value) {
                     Text("LIE DETECTED", color = Color.Red)
                 } else {
