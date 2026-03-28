@@ -66,12 +66,12 @@ fun LieDetectorApp() {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(onClick = { isLieTarget.value = false },
-                    modifier = Modifier.alpha(1f) //Hides the button
+                    modifier = Modifier.alpha(0.1f) //Hides the button
                 ) {
                     Text("Truth Button")
                 }
                 Button(onClick = { isLieTarget.value = true },
-                    modifier = Modifier.alpha(1f) //Hides the button
+                    modifier = Modifier.alpha(0.1f) //Hides the button
                 ) {
                     Text("Lie Button")
                 }

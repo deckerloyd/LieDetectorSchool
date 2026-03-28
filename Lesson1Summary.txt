@@ -1,0 +1,11 @@
+1. Declarative UI : We used Jetpack Compose to describe what the screen should look like based on data, rather than manually updating elements.
+2. State Management: We used remember and mutableStateOf to create a "brain" for the app that survives when the screen redraws.
+3. Asynchronous Logic : We used LaunchedEffect and delay to create a timed "theatrical" pause without freezing the app.
+4. Layout & Styling: We organized the UI with Column and Row and used Modifiers like alpha to create hidden "secret" controls.
+5. If/else branching: We created a conditional system within the UI to drive the app's operation.
+
+When ready to dive back in, here are a few ways we could take this project further:
+
+1. Sensory Fluff: We could add a vibrating pulse while the "Scanning..." text is visible to make the prank more convincing.
+2. Visual Polish: We could use a Box layout to place a fingerprint icon behind the "Scan" button or add a rotating loading circle.
+3. UI Polish: We could write a Preview Compose function to learn how previews work in Android Studio, then use that to pretty-up the app's aesthetics.
