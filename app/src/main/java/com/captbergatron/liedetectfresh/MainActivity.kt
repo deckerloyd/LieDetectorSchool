@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,25 +32,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LieDetectFreshTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                //Calling main app logic
+                LieDetectorApp()
                 }
             }
         }
     }
-}
-//Today's date is 24 March
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
+//Today's date is 27 March
 @Composable
 fun LieDetectorApp() {
     //1. State Declaration (the brain)
@@ -78,19 +65,23 @@ fun LieDetectorApp() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { isLieTarget.value = false }) {
+                Button(onClick = { isLieTarget.value = false },
+                    modifier = Modifier.alpha(1f) //Hides the button
+                ) {
                     Text("Truth Button")
                 }
-                Button(onClick = { isLieTarget.value = true }) {
+                Button(onClick = { isLieTarget.value = true },
+                    modifier = Modifier.alpha(1f) //Hides the button
+                ) {
                     Text("Lie Button")
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = {
+            /*Button(onClick = {
                 isScanning.value = true //Start the fake sci-fi stuff
             }) {
                 Text("Scan Fingerprint")
-            }
+            }*/
 
             //CONDITIONAL UI
             if (isScanning.value) {
@@ -122,8 +113,8 @@ fun LieDetectorApp() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun LieDetectorAppPreview   () {
     LieDetectFreshTheme {
-        Greeting("Android")
+        LieDetectorApp()
     }
 }
