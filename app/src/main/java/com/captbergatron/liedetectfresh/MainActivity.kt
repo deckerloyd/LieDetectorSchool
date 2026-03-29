@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -77,16 +78,20 @@ fun LieDetectorApp() {
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            /*Button(onClick = {
-                isScanning.value = true //Start the fake sci-fi stuff
-            }) {
-                Text("Scan Fingerprint")
-            }*/
 
             //CONDITIONAL UI
             if (isScanning.value) {
-                Text("Scanning... Hold still.")
+                ScanningScreen()
             } else if (showResult.value) {
+                ResultScreen(
+                    isLieTarget,
+                    onReset = {
+                        showResult.value = false
+                        isScanning.value = false
+                    })
+            }
+
+                /*OLD CODE
                 Button(onClick = {
                     showResult.value = false
                     isScanning.value = false
@@ -99,7 +104,8 @@ fun LieDetectorApp() {
                 } else {
                     Text("TRUTH CONFIRMED", color = Color.Green)
                 }
-            } else {
+                END OF OLD CODE*/
+             else {
                 Button(onClick = { isScanning.value = true }) {
                     Text("Scan Fingerprint")
                 }
@@ -107,9 +113,24 @@ fun LieDetectorApp() {
         }
     }
 
+@Composable
+fun ScanningScreen() {
+    Text("Scanning... Hold still.")
+}
 
-
-
+@Composable
+fun ResultScreen(isLieTarget: MutableState<Boolean>, //Uses boolean parameter isLieTarget
+                 onReset: () -> Unit //Passes the reset button press to the main app
+) {
+    Button(onClick = { onReset() }) { //Produces the reset button
+        Text("Reset")
+    }
+    if (isLieTarget.value) { //Shows result based on the current state of isLieTarget
+        Text("LIE DETECTED", color = Color.Red)
+    } else {
+        Text("TRUTH CONFIRMED", color = Color.Green)
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
