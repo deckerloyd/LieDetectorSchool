@@ -89,23 +89,7 @@ fun LieDetectorApp() {
                         showResult.value = false
                         isScanning.value = false
                     })
-            }
-
-                /*OLD CODE
-                Button(onClick = {
-                    showResult.value = false
-                    isScanning.value = false
-                   }) {
-                    Text("Reset")
-                }
-                // This is where the prank's Reveal happens
-                if (isLieTarget.value) {
-                    Text("LIE DETECTED", color = Color.Red)
-                } else {
-                    Text("TRUTH CONFIRMED", color = Color.Green)
-                }
-                END OF OLD CODE*/
-             else {
+            }  else {
                 Button(onClick = { isScanning.value = true }) {
                     Text("Scan Fingerprint")
                 }
