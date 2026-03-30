@@ -5,17 +5,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -84,32 +89,51 @@ fun LieDetectorApp() {
                 ScanningScreen()
             } else if (showResult.value) {
                 ResultScreen(
-                    isLieTarget,
+                    isLieTarget.value,
                     onReset = {
                         showResult.value = false
                         isScanning.value = false
                     })
             }  else {
-                Button(onClick = { isScanning.value = true }) {
-                    Text("Scan Fingerprint")
-                }
+                StartScreen(
+                    onScan = {
+                        isScanning.value = true
+                    }
+                )
             }
         }
     }
 
 @Composable
-fun ScanningScreen() {
-    Text("Scanning... Hold still.")
+fun StartScreen(onScan: () -> Unit) {
+    Box(contentAlignment = Alignment.Center) {
+        //Layer 1 (bottom): Fingerprint Icon
+        Icon(
+            imageVector = Icons.Default.Fingerprint,
+            contentDescription = "Fingerprint",
+            modifier = Modifier.size(200.dp),
+            tint = Color.LightGray
+        )
+
+        //Layer 2 (top): Button
+        Button(onClick = { onScan() }) {
+            Text("Scan Fingerprint")
+        }
+    }
 }
 
 @Composable
-fun ResultScreen(isLieTarget: MutableState<Boolean>, //Uses boolean parameter isLieTarget
+fun ScanningScreen() {
+    Text("Scanning... Hold still.")
+}
+@Composable
+fun ResultScreen(isLieTarget: Boolean, //Uses boolean parameter isLieTarget
                  onReset: () -> Unit //Passes the reset button press to the main app
 ) {
     Button(onClick = { onReset() }) { //Produces the reset button
         Text("Reset")
     }
-    if (isLieTarget.value) { //Shows result based on the current state of isLieTarget
+    if (isLieTarget) { //Shows result based on the current state of isLieTarget
         Text("LIE DETECTED", color = Color.Red)
     } else {
         Text("TRUTH CONFIRMED", color = Color.Green)
