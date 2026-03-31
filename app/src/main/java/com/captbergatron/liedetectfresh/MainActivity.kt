@@ -4,6 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -123,7 +129,25 @@ fun StartScreen(onScan: () -> Unit) {
 
 @Composable
 fun ScanningScreen() {
-    Text("Scanning... Hold still.")
+    val infiniteTransition = rememberInfiniteTransition(label = "pulse")
+    val alpha by infiniteTransition.animateFloat(
+        initialValue = 0.3f,    // dim
+        targetValue = 1.0f,     // bright
+        animationSpec = infiniteRepeatable(
+            animation = tween(800), // 800ms per pulse
+            repeatMode = RepeatMode.Reverse // go back and forth
+        ),
+        label = "fingerprint_alpha"
+    )
+    Box(contentAlignment = Alignment.Center) {
+        Icon(
+            imageVector = Icons.Default.Fingerprint,
+            contentDescription = "Fingerprint",
+            modifier = Modifier.size(200.dp).alpha(alpha),
+            tint = Color.LightGray
+        )
+        Text("Scanning... Hold still.")
+    }
 }
 @Composable
 fun ResultScreen(isLieTarget: Boolean, //Uses boolean parameter isLieTarget
