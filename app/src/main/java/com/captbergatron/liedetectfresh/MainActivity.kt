@@ -59,7 +59,7 @@ fun LieDetectorApp() {
 
     LaunchedEffect(isScanning.value) {
         if (isScanning.value) {
-            delay(3000)
+            delay(5000)
             isScanning.value = false
             showResult.value = true
         }
