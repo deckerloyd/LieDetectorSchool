@@ -1,0 +1,11 @@
+1. Component Decomposition: Split app into StartScreen, ScanningScreen, ResultScreen instead of one giant MainScreen.
+2. Callbacks () -> Unit: passing actions upward from a lower function.
+3. Box layout: Layering UI components like icons, buttons, and text ontop of each other.
+4. InfiniteTransition: Pulsing alpha animation.
+5. Previews: Independent UI preview of each screen state.
+
+When ready to dive back in, here are a few ways we could take this project further:
+
+1. Theming with MaterialTheme: Learn about coding customized aesthetics like color schemes and typography for a polished look.
+2. Vibration via HapticFeedback: Adding sensory fluff that will teach Android code for features like vibrate.
+3. UI Fine Tuning: Learn concepts for changing what buttons look like or how to make sure UI components are sharp and positioned well.

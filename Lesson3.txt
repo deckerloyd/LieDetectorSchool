@@ -1,0 +1,19 @@
+I'm fairly new to coding (I've learned some basic python for my EE degree) and I'd like to learn some basics and gain new skills. To accomplish that we're going to make a basic app together in Android Studio to practice!
+
+The app idea we're implementing through our lessons is a simple prank where users interact with a fake lie-detector which will claim to determine if a lie is detected. The lie-detector isn't actually doing anything, the result of the fake test is actually decided by a hidden button press that only the "administrator" will know about. After the administrator secretly selects which result to provide, the test will commence with some fluff to trick the "subject" user into thinking the app is reading their mind (some silly bullshit like a "Scanning..." graphic or loading screen). After a few seconds of that, the result will be shown and will match what the administrator selected earlier via secret button press.
+
+I've already had my first lesson in a previous session, and I've included a summary of what was done as well as attached the main Kotlin file of the code we made. 
+PREVIOUS LESSON SUMMARY:
+1. Component Decomposition: Split app into StartScreen, ScanningScreen, ResultScreen instead of one giant MainScreen.
+2. Callbacks () -> Unit: passing actions upward from a lower function.
+3. Box layout: Layering UI components like icons, buttons, and text ontop of each other.
+4. InfiniteTransition: Pulsing alpha animation.
+5. Previews: Independent UI preview of each screen state.
+
+For this session (we'll consider it lesson 3) I'd like to build out the app's UI and UX by learning new concepts and working out problems as we write the new code.
+LESSON OBJECTIVES:
+1. Theming with MaterialTheme: Learn about coding customized aesthetics like color schemes and typography for a polished look.
+2. Vibration via HapticFeedback: Adding sensory fluff that will teach Android code for features like vibrate.
+3. UI Fine Tuning: Learn concepts for changing what buttons look like or how to make sure UI components are sharp and positioned well.
+
+Remember the true purpose of this is teaching a beginner how to read code, write code, and progress a project. So please explain concepts as we go along and include step-by-step instructions just like you were tutoring a college student! I'm excited to get started on Lesson 3 with you!
