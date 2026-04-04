@@ -22,6 +22,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,10 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.captbergatron.liedetectfresh.ui.theme.LieDetectFreshTheme
+import com.captbergatron.liedetectfresh.ui.theme.LieRed
+import com.captbergatron.liedetectfresh.ui.theme.TruthGreen
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -49,7 +54,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-//Today's date is 27 March
+//Today's date is 2 April
 @Composable
 fun LieDetectorApp() {
     //1. State Declaration (the brain)
@@ -65,7 +70,12 @@ fun LieDetectorApp() {
         }
     }
 
-        //2. Layout (the body)
+    //2. Layout (the body)
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.onBackground
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
@@ -76,12 +86,14 @@ fun LieDetectorApp() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { isLieTarget.value = false },
+                Button(
+                    onClick = { isLieTarget.value = false },
                     modifier = Modifier.alpha(0.1f) //Hides the button
                 ) {
                     Text("Truth Button")
                 }
-                Button(onClick = { isLieTarget.value = true },
+                Button(
+                    onClick = { isLieTarget.value = true },
                     modifier = Modifier.alpha(0.1f) //Hides the button
                 ) {
                     Text("Lie Button")
@@ -99,7 +111,7 @@ fun LieDetectorApp() {
                         showResult.value = false
                         isScanning.value = false
                     })
-            }  else {
+            } else {
                 StartScreen(
                     onScan = {
                         isScanning.value = true
@@ -108,6 +120,7 @@ fun LieDetectorApp() {
             }
         }
     }
+}
 
 @Composable
 fun StartScreen(onScan: () -> Unit) {
@@ -117,7 +130,7 @@ fun StartScreen(onScan: () -> Unit) {
             imageVector = Icons.Default.Fingerprint,
             contentDescription = "Fingerprint",
             modifier = Modifier.size(200.dp),
-            tint = Color.LightGray
+            tint = MaterialTheme.colorScheme.primary
         )
 
         //Layer 2 (top): Button
@@ -129,6 +142,11 @@ fun StartScreen(onScan: () -> Unit) {
 
 @Composable
 fun ScanningScreen() {
+    val haptic = LocalHapticFeedback.current
+
+    LaunchedEffect(Unit) {
+        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+    }
     val infiniteTransition = rememberInfiniteTransition(label = "pulse")
     val alpha by infiniteTransition.animateFloat(
         initialValue = 0.3f,    // dim
@@ -144,7 +162,7 @@ fun ScanningScreen() {
             imageVector = Icons.Default.Fingerprint,
             contentDescription = "Fingerprint",
             modifier = Modifier.size(200.dp).alpha(alpha),
-            tint = Color.LightGray
+            tint = MaterialTheme.colorScheme.primary
         )
         Text("Scanning... Hold still.")
     }
@@ -157,9 +175,9 @@ fun ResultScreen(isLieTarget: Boolean, //Uses boolean parameter isLieTarget
         Text("Reset")
     }
     if (isLieTarget) { //Shows result based on the current state of isLieTarget
-        Text("LIE DETECTED", color = Color.Red)
+        Text("LIE DETECTED", color = LieRed)
     } else {
-        Text("TRUTH CONFIRMED", color = Color.Green)
+        Text("TRUTH CONFIRMED", color = TruthGreen)
     }
 }
 
