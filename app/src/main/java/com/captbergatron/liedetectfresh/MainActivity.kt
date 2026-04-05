@@ -145,8 +145,12 @@ fun ScanningScreen() {
     val haptic = LocalHapticFeedback.current
 
     LaunchedEffect(Unit) {
-        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        for (i in 1..5){
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            delay(1000)
+        }
     }
+
     val infiniteTransition = rememberInfiniteTransition(label = "pulse")
     val alpha by infiniteTransition.animateFloat(
         initialValue = 0.3f,    // dim
