@@ -145,9 +145,11 @@ fun ScanningScreen() {
     val haptic = LocalHapticFeedback.current
 
     LaunchedEffect(Unit) {
-        for (i in 1..5){
+        @Suppress("Unused")
+        for (i in 0 until 5000/1000){
             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             delay(1000)
+
         }
     }
 
